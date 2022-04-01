@@ -1,3 +1,12 @@
-.wp-block-xwp-country-card .components-form-token-field__suggestion {
-	white-space: pre-wrap;
+.wp-block-xwp-country-card {
+	.components-form-token-field__suggestion {
+		white-space: pre-wrap;
+	}
+	.xwp-country-card {
+		float: right;
+		margin-left: 30px;
+	}
+	.components-placeholder {
+		width: unset;
+	}
 }
