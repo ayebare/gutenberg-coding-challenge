@@ -110,7 +110,7 @@ export default withSelect( ( select, ownProps ) => {
 	if ( ownProps.attributes.countryCode ) {
 		query.per_page = 5;
 		query.search = ownProps.attributes.countryCode;
-		query.exclude = currentPostId;
+		query.exclude = currentPostId; //@todo filter this out in js
 	}
 
 	const selectorArgs = [ 'postType', 'post', query ];
