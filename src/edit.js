@@ -15,12 +15,14 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
+import { withSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import countries from '../assets/countries.json';
 import { getEmojiFlag } from './utils';
 import Preview from './preview';
 
-export default function Edit( { attributes, setAttributes } ) {
+function Edit( props ) {
+	const { attributes, setAttributes, newRelatedPosts } = props;
 	const { countryCode, relatedPosts } = attributes;
 	const options = Object.keys( countries ).map( ( code ) => ( {
 		value: code,
@@ -36,39 +38,26 @@ export default function Edit( { attributes, setAttributes } ) {
 		else if ( countryCode ) setPreview( true );
 	};
 
+	useEffect( () => {
+		if ( props.hasResolved ) {
+			if (
+				JSON.stringify( relatedPosts ) !==
+				JSON.stringify( newRelatedPosts )
+			) {
+				setAttributes( {
+					relatedPosts: newRelatedPosts,
+				} );
+			}
+		}
+	} );
+
 	const handleChangeCountryCode = ( newCountryCode ) => {
-		if ( newCountryCode && countryCode !== newCountryCode ) {
+		if ( countryCode !== newCountryCode ) {
 			setAttributes( {
 				countryCode: newCountryCode,
-				relatedPosts: [],
 			} );
 		}
 	};
-
-	useEffect( () => {
-		async function getRelatedPosts() {
-			const postId = window.location.href.match( /post=([\d]+)/ )[ 1 ];
-			const response = await window.fetch(
-				`/wp-json/wp/v2/posts?search=${ countries[ countryCode ] }&exclude=${ postId }`
-			);
-
-			if ( ! response.ok )
-				throw new Error( `HTTP error! Status: ${ response.status }` );
-
-			const posts = await response.json();
-
-			setAttributes( {
-				relatedPosts:
-					posts?.map( ( relatedPost ) => ( {
-						...relatedPost,
-						title: relatedPost.title?.rendered || relatedPost.link,
-						excerpt: relatedPost.excerpt?.rendered || '',
-					} ) ) || [],
-			} );
-		}
-
-		getRelatedPosts();
-	}, [ countryCode, setAttributes ] );
 
 	return (
 		<div { ...useBlockProps() }>
@@ -112,3 +101,36 @@ export default function Edit( { attributes, setAttributes } ) {
 		</div>
 	);
 }
+
+export default withSelect( ( select, ownProps ) => {
+	const currentPostId = select( 'core/editor' ).getCurrentPostId();
+
+	const query = {};
+
+	if ( ownProps.attributes.countryCode ) {
+		query.per_page = 5;
+		query.search = ownProps.attributes.countryCode;
+		query.exclude = currentPostId;
+	}
+
+	const selectorArgs = [ 'postType', 'post', query ];
+
+	const posts = select( 'core' ).getEntityRecords( ...selectorArgs );
+	const hasResolved = select( 'core' ).hasFinishedResolution(
+		'getEntityRecords',
+		selectorArgs
+	);
+
+	const relatedPosts = posts?.map( ( relatedPost ) => ( {
+		id: relatedPost.id,
+		title: relatedPost.title?.rendered || relatedPost.link,
+		link: relatedPost.link,
+		excerpt: relatedPost.excerpt?.rendered || '',
+	} ) );
+
+	return {
+		...ownProps,
+		hasResolved,
+		newRelatedPosts: relatedPosts || [],
+	};
+} )( Edit );
