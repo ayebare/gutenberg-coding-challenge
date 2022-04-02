@@ -108,9 +108,8 @@ export default withSelect( ( select, ownProps ) => {
 	const query = {};
 
 	if ( ownProps.attributes.countryCode ) {
-		query.per_page = 5;
+		query.per_page = 10;
 		query.search = ownProps.attributes.countryCode;
-		query.exclude = currentPostId; //@todo filter this out in js
 	}
 
 	const selectorArgs = [ 'postType', 'post', query ];
@@ -128,9 +127,14 @@ export default withSelect( ( select, ownProps ) => {
 		excerpt: relatedPost.excerpt?.rendered || '',
 	} ) );
 
+	// Filter out current post id
+	const filteredRelatedPosts = relatedPosts.filter(
+		( relatedPost ) => relatedPost.id !== currentPostId
+	);
+
 	return {
 		...ownProps,
 		hasResolved,
-		newRelatedPosts: relatedPosts || [],
+		newRelatedPosts: filteredRelatedPosts || [],
 	};
 } )( Edit );
