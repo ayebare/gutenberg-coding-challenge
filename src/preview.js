@@ -84,11 +84,8 @@ const Preview = ( { countryCode, relatedPosts, isLoading } ) => {
 
 Preview.propTypes = {
 	countryCode: PropTypes.string,
-	relatedPosts: PropTypes.oneOfType( [
-		PropTypes.arrayOf( PropTypes.number ),
-		PropTypes.func,
-	] ),
-	isLoading: PropTypes.bool,
+	relatedPosts: PropTypes.array,
+	isLoading: PropTypes.bool
 };
 
 export default Preview;
