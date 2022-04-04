@@ -11,8 +11,9 @@ import continentNames from '../assets/continent-names.json';
 import continents from '../assets/continents.json';
 import { getEmojiFlag } from './utils';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
+import PropTypes from 'prop-types';
 
-export default function Preview( { countryCode, relatedPosts, isLoading } ) {
+const Preview = ( { countryCode, relatedPosts, isLoading } ) => {
 	if ( ! countryCode ) return null;
 
 	const emojiFlag = getEmojiFlag( countryCode ),
@@ -75,4 +76,15 @@ export default function Preview( { countryCode, relatedPosts, isLoading } ) {
 			</div>
 		</div>
 	);
-}
+};
+
+Preview.propTypes = {
+	countryCode: PropTypes.string,
+	relatedPosts: PropTypes.oneOfType( [
+		PropTypes.arrayOf( PropTypes.number ),
+		PropTypes.func,
+	] ),
+	isLoading: PropTypes.bool,
+};
+
+export default Preview;
