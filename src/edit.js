@@ -22,7 +22,7 @@ import { getEmojiFlag } from './utils';
 import Preview from './preview';
 
 function Edit( props ) {
-	const { attributes, setAttributes, newRelatedPosts } = props;
+	const { attributes, setAttributes, newRelatedPosts, hasResolved } = props;
 	const { countryCode, relatedPosts } = attributes;
 	const options = Object.keys( countries ).map( ( code ) => ( {
 		value: code,
@@ -39,7 +39,7 @@ function Edit( props ) {
 	};
 
 	useEffect( () => {
-		if ( props.hasResolved ) {
+		if ( hasResolved ) {
 			if (
 				JSON.stringify( relatedPosts ) !==
 				JSON.stringify( newRelatedPosts )
@@ -95,6 +95,7 @@ function Edit( props ) {
 				<Preview
 					countryCode={ countryCode }
 					relatedPosts={ relatedPosts }
+					isLoading={ ! hasResolved }
 				/>
 			) }
 		</div>

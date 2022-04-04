@@ -12,7 +12,7 @@ import continents from '../assets/continents.json';
 import { getEmojiFlag } from './utils';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
-export default function Preview( { countryCode, relatedPosts } ) {
+export default function Preview( { countryCode, relatedPosts, isLoading } ) {
 	if ( ! countryCode ) return null;
 
 	const emojiFlag = getEmojiFlag( countryCode ),
@@ -45,6 +45,8 @@ export default function Preview( { countryCode, relatedPosts } ) {
 								),
 								relatedPosts.length
 						  )
+						: isLoading
+						? __( '... loading', 'xwp-country-card' )
 						: __(
 								'There are no related posts.',
 								'xwp-country-card'
