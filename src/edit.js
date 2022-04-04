@@ -55,6 +55,7 @@ function Edit( props ) {
 		if ( countryCode !== newCountryCode ) {
 			setAttributes( {
 				countryCode: newCountryCode,
+				relatedPosts: [],
 			} );
 		}
 	};
