@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
+import { __unstableStripHTML as stripHTML } from '@wordpress/dom'; // The unstable function may not be used in a real life production environment
 
 /**
  * Internal dependencies
@@ -85,7 +85,7 @@ const Preview = ( { countryCode, relatedPosts, isLoading } ) => {
 Preview.propTypes = {
 	countryCode: PropTypes.string,
 	relatedPosts: PropTypes.array,
-	isLoading: PropTypes.bool
+	isLoading: PropTypes.bool,
 };
 
 export default Preview;
