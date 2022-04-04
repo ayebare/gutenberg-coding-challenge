@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import parse from 'html-react-parser';
 
 /**
  * Internal dependencies
@@ -63,7 +62,7 @@ export default function Preview( { countryCode, relatedPosts } ) {
 										{ relatedPost.title }
 									</h3>
 									<p className="excerpt">
-										{ parse( relatedPost.excerpt ) }
+										{ relatedPost.excerpt }
 									</p>
 								</a>
 							</li>
