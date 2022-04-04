@@ -11,6 +11,8 @@ import continentNames from '../assets/continent-names.json';
 import continents from '../assets/continents.json';
 import { getEmojiFlag } from './utils';
 
+//@todo use dangerouslySetInnerHTML with sanitizatio to render the excerpt
+
 export default function Preview( { countryCode, relatedPosts } ) {
 	if ( ! countryCode ) return null;
 
