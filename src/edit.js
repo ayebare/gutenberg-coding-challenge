@@ -72,13 +72,6 @@ function Edit( props ) {
 				</ToolbarGroup>
 			</BlockControls>
 
-			{ isPreview && (
-				<Preview
-					countryCode={ countryCode }
-					relatedPosts={ relatedPosts }
-				/>
-			) }
-
 			<Placeholder
 				icon={ globe }
 				label={ __( 'XWP Country Card', 'xwp-country-card' ) }
@@ -97,6 +90,13 @@ function Edit( props ) {
 					allowReset={ true }
 				/>
 			</Placeholder>
+
+			{ isPreview && (
+				<Preview
+					countryCode={ countryCode }
+					relatedPosts={ relatedPosts }
+				/>
+			) }
 		</div>
 	);
 }
