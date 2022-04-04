@@ -1,7 +1,13 @@
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
+import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
 /**
  * Internal dependencies
@@ -10,14 +16,26 @@ import countries from '../assets/countries.json';
 import continentNames from '../assets/continent-names.json';
 import continents from '../assets/continents.json';
 import { getEmojiFlag } from './utils';
-import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
-import PropTypes from 'prop-types';
 
 const Preview = ( { countryCode, relatedPosts, isLoading } ) => {
 	if ( ! countryCode ) return null;
 
 	const emojiFlag = getEmojiFlag( countryCode ),
 		hasRelatedPosts = relatedPosts?.length > 0;
+	let relatedPostsHeading = __(
+		'There are no related posts.',
+		'xwp-country-card'
+	);
+
+	if ( hasRelatedPosts ) {
+		relatedPostsHeading = sprintf(
+			/* translators: %d is replaced number of related posts */
+			__( 'There are %d related posts:', 'xwp-country-card' ),
+			relatedPosts.length
+		);
+	} else if ( isLoading ) {
+		relatedPostsHeading = __( '… loading', 'xwp-country-card' );
+	}
 
 	return (
 		<div className="xwp-country-card">
@@ -37,21 +55,7 @@ const Preview = ( { countryCode, relatedPosts, isLoading } ) => {
 			</h3>
 			<div className="xwp-country-card__related-posts">
 				<h3 className="xwp-country-card__related-posts__heading">
-					{ hasRelatedPosts
-						? sprintf(
-								/* translators: %d is replaced number of related posts */
-								__(
-									'There are %d related posts:',
-									'xwp-country-card'
-								),
-								relatedPosts.length
-						  )
-						: isLoading
-						? __( '... loading', 'xwp-country-card' )
-						: __(
-								'There are no related posts.',
-								'xwp-country-card'
-						  ) }
+					{ relatedPostsHeading }
 				</h3>
 				{ hasRelatedPosts && (
 					<ul className="xwp-country-card__related-posts-list">
