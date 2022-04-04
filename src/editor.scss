@@ -1,12 +1,17 @@
 .wp-block-xwp-country-card {
+	display: flex;
+    flex-flow: row-reverse;
+    align-items: flex-start;
+	justify-content: space-between;
+
 	.components-form-token-field__suggestion {
 		white-space: pre-wrap;
 	}
 	.xwp-country-card {
-		float: right;
+		width: 62%;
 		margin-left: 30px;
 	}
 	.components-placeholder {
-		width: unset;
+		width: 35%;
 	}
 }

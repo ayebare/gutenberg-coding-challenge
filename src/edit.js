@@ -71,33 +71,32 @@ function Edit( props ) {
 					/>
 				</ToolbarGroup>
 			</BlockControls>
-			<div>
-				{ isPreview && (
-					<Preview
-						countryCode={ countryCode }
-						relatedPosts={ relatedPosts }
-					/>
-				) }
 
-				<Placeholder
-					icon={ globe }
-					label={ __( 'XWP Country Card', 'xwp-country-card' ) }
-					isColumnLayout={ true }
-					instructions={ __(
-						'Type in a name of a contry you want to display on you site.',
-						'xwp-country-card'
-					) }
-				>
-					<ComboboxControl
-						label={ __( 'Country', 'xwp-country-card' ) }
-						hideLabelFromVision
-						options={ options }
-						value={ countryCode }
-						onChange={ handleChangeCountryCode }
-						allowReset={ true }
-					/>
-				</Placeholder>
-			</div>
+			{ isPreview && (
+				<Preview
+					countryCode={ countryCode }
+					relatedPosts={ relatedPosts }
+				/>
+			) }
+
+			<Placeholder
+				icon={ globe }
+				label={ __( 'XWP Country Card', 'xwp-country-card' ) }
+				isColumnLayout={ true }
+				instructions={ __(
+					'Type in a name of a contry you want to display on you site.',
+					'xwp-country-card'
+				) }
+			>
+				<ComboboxControl
+					label={ __( 'Country', 'xwp-country-card' ) }
+					hideLabelFromVision
+					options={ options }
+					value={ countryCode }
+					onChange={ handleChangeCountryCode }
+					allowReset={ true }
+				/>
+			</Placeholder>
 		</div>
 	);
 }
