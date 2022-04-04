@@ -128,7 +128,7 @@ export default withSelect( ( select, ownProps ) => {
 	} ) );
 
 	// Filter out current post id
-	const filteredRelatedPosts = relatedPosts.filter(
+	const filteredRelatedPosts = relatedPosts?.filter(
 		( relatedPost ) => relatedPost.id !== currentPostId
 	);
 
