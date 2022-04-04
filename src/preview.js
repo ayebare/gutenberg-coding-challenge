@@ -10,8 +10,7 @@ import countries from '../assets/countries.json';
 import continentNames from '../assets/continent-names.json';
 import continents from '../assets/continents.json';
 import { getEmojiFlag } from './utils';
-
-//@todo use dangerouslySetInnerHTML with sanitizatio to render the excerpt
+import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
 export default function Preview( { countryCode, relatedPosts } ) {
 	if ( ! countryCode ) return null;
@@ -64,7 +63,7 @@ export default function Preview( { countryCode, relatedPosts } ) {
 										{ relatedPost.title }
 									</h3>
 									<p className="excerpt">
-										{ relatedPost.excerpt }
+										{ stripHTML( relatedPost.excerpt ) }
 									</p>
 								</a>
 							</li>
