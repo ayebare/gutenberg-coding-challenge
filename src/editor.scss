@@ -1,3 +1,11 @@
 .wp-block-xwp-country-card .components-form-token-field__suggestion {
 	white-space: pre-wrap;
 }
+.main-container{
+	display:flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	>div{
+		width: 48% !important;
+	}
+}
